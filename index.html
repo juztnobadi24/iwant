@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>iWatchTVrAdio - V8</title>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.8/dist/hls.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.min.js"></script>
+
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="introScreen">
+    <div id="introText">
+      □ Advertise and promote your business with us today! Call iWatchTV or Email us at iwatchtvworldwide@gmail.com. 
+      We are here to serve you and elevate your business worldwide.<br>
+      <small style="opacity:.9">Auto starting in 5 seconds... COPYRIGHT © 2025 iWatchTVraDio</small>
+    </div>
+  </div>
+
+
+  <div id="wildcardOverlay" aria-hidden="true">
+    <div id="wildcardBox">
+      <img id="wildcardImg" src="" alt="Wildcard banner">
+      <div id="wildcardText">We serve you better...</div>
+    </div>
+  </div>
+
+
+  <div id="player">
+    <video id="video" autoplay playsinline preload="auto" crossorigin="anonymous"></video>
+    <audio id="audio" preload="auto"></audio>
+
+    <div id="badge"><img src="" alt=""></div>
+    <div id="nowPlaying">iWatchTV</div>
+
+
+    <div id="controls" aria-hidden="true">
+      <div class="controls-left">
+        <button id="btnMenu" class="icon" title="Channels">☰</button>
+        <button id="btnPrev" class="icon" title="Previous">⏮</button>
+        <button id="btnPlay" class="icon" title="Play/Pause">⏯</button>
+        <button id="btnNext" class="icon" title="Next">⏭</button>
+      </div>
+      <div class="controls-center">
+        <button id="btnNormal" class="txt" title="Normal">Normal</button>
+        <button id="btnStretch" class="txt" title="Stretch">Stretch</button>
+        <button id="btnZoom" class="txt" title="Zoom">Zoom</button>
+        <button id="btnExit" class="txt" title="Exit to Normal">Exit</button>
+      </div>
+      <div class="controls-right">
+        <button id="btnFS" class="txt" title="Fullscreen">⛶</button>
+        <button id="btnLogout" class="txt" title="Back to Intro">Full Exit</button>
+      </div>
+    </div>
+
+
+    <aside id="chlist" aria-label="Channel list">
+      <h2>Channels</h2>
+      <div id="tabs">
+        <button class="tabbtn active" data-tab="tv">TV</button>
+        <button class="tabbtn" data-tab="radio">Radio</button>
+      </div>
+      <input id="search" placeholder="Search channel..." />
+      <ul id="listAll" class="list"></ul>
+    </aside>
+
+    <div id="cue" style="display:none"></div>
+  </div>
+
+
+  <div id="watermark">iWatchTVrAdio</div>
+
+
+  <script src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
+  <script>
+    DisableDevtool({})
+  </script>
+
+
+  <script src="app.js"></script>
+</body>
+</html>

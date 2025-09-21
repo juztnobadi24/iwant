@@ -1,0 +1,72 @@
+:root {
+  --bg:#000;
+  --fg:#fff;
+  --accent:#e50914;
+  --glass:rgba(0,0,0,0.22);
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:Arial,Helvetica,sans-serif;overflow:hidden}
+
+
+#introScreen{position:fixed;inset:0;background:url('https://i.imgur.com/bDSDdmI.jpeg') center/cover no-repeat, rgba(0,0,0,0.35);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:1;transition:opacity .8s ease;}
+#introText{font-size:30px;color:#fff;text-align:center;padding:14px 20px;border-radius:10px;background:rgba(0,0,0,0.35);transform:scale(0.98);animation:zoomIn 500ms ease forwards, colorCycle 3s linear infinite;}
+@keyframes zoomIn{to{transform:scale(1)}}
+@keyframes colorCycle {0%{color:#ff4d4d}33%{color:#ffd24d}66%{color:#4dd2ff}100%{color:#ff4d4d}}
+
+
+#player{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;visibility:hidden;background:#000;transition:background 300ms linear;}
+video#video{width:100%;height:100%;object-fit:contain;display:block;background:#000}
+audio#audio{display:none;width:100%}
+
+
+#nowPlaying{position:absolute;top:12px;left:12px;z-index:70;font-size:18px;font-weight:700;color:var(--fg);text-shadow:0 1px 6px rgba(0,0,0,0.6);pointer-events:none;}
+
+
+#badge{position:absolute;top:8px;right:12px;z-index:70;padding:6px;border-radius:8px;background:transparent;}
+#badge img{height:96px;width:auto;display:block}
+
+
+#controls{position:absolute;left:0;right:0;bottom:12px;display:flex;align-items:center;justify-content:space-between;padding:8px 18px;gap:12px;pointer-events:none;opacity:0;transition:opacity .25s;z-index:70;}
+#controls.show{opacity:1;pointer-events:auto}
+.controls-left,.controls-center,.controls-right{display:flex;align-items:center;gap:8px}
+button.icon,button.txt{background:transparent;color:#fff;border-radius:8px;cursor:pointer;}
+button.icon{border:none;padding:8px 10px;font-size:20px;}
+button.txt{border:1px solid rgba(255,255,255,0.12);padding:6px 10px;font-size:13px;}
+
+
+#chlist{position:fixed;top:12px;left:12px;width:320px;height:calc(100% - 24px);background:var(--glass);backdrop-filter:blur(8px);transform:translateX(calc(-100% - 12px));transition:transform .28s;z-index:68;border-radius:12px;padding:12px;overflow:hidden;}
+#chlist.open{transform:translateX(0)}
+#chlist h2{margin:0 0 8px;font-size:16px}
+#tabs{display:flex;gap:6px;margin-bottom:8px}
+.tabbtn{flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;cursor:pointer;font-size:13px}
+.tabbtn.active{background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.08)}
+#search{width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff;margin-bottom:8px;outline:none}
+.list{list-style:none;padding:4px;margin:0;max-height:calc(100% - 140px);overflow:auto}
+.list::-webkit-scrollbar{width:6px}
+.list::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:10px}
+.item{display:flex;align-items:center;justify-content:space-between;padding:8px;border-radius:8px;cursor:pointer;gap:8px}
+.item .nm{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+.item:hover{background:rgba(255,255,255,0.02)}
+.item.selected{background:rgba(229,9,20,0.12)}
+
+
+#wildcardOverlay{position:fixed;inset:0;display:flex;justify-content:center;align-items:center;background:rgba(0,0,0,0.25);opacity:0;transition:opacity 0.4s ease;z-index:9998;pointer-events:none;}
+#wildcardBox{display:flex;flex-direction:column;align-items:center;gap:8px;background:rgba(0,0,0,0.18);padding:10px;border-radius:10px;backdrop-filter: blur(2px);}
+#wildcardOverlay img{width:520px;max-width:80vw;height:auto;object-fit:contain;border-radius:8px;box-shadow:0 4px 30px rgba(0,0,0,0.6);}
+#wildcardText{color:#fff;font-size:14px;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,0.6);}
+
+
+#watermark{position:absolute;top:8px;right:12px;z-index:1000;font-size:12px;color:rgba(255,255,255,0.4);font-weight:bold;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,0.3);opacity:0.7;transition:opacity 2s ease-in-out;}
+
+
+@media (max-width:720px){
+  #chlist{width:88vw;height:78vh;left:6px;top:6px}
+  #introText{font-size:20px;padding:12px}
+  #badge img{height:72px}
+  .item .nm{font-size:13px}
+  button.icon{font-size:18px}
+  button.txt{font-size:12px}
+  #nowPlaying{font-size:16px}
+  .controls-left,.controls-center,.controls-right{flex-wrap:wrap;justify-content:center}
+  #wildcardOverlay img{width:320px;max-width:90vw}
+}
