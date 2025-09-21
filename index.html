@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>iWatchTVrAdio - V</title>
+  <title>iWatchTVrAdio - V8</title>
 
-  <!-- External libs -->
+ 
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.8/dist/hls.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.min.js"></script>
 
-  <!-- Styles -->
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Intro -->
+
   <div id="introScreen">
     <div id="introText">
       □ Advertise and promote your business with us today! Call iWatchTV or Email us at iwatchtvworldwide@gmail.com. 
@@ -22,7 +22,7 @@
     </div>
   </div>
 
-  <!-- Wildcard Overlay -->
+ 
   <div id="wildcardOverlay" aria-hidden="true">
     <div id="wildcardBox">
       <img id="wildcardImg" src="" alt="Wildcard banner">
@@ -30,7 +30,7 @@
     </div>
   </div>
 
-  <!-- Player -->
+ 
   <div id="player">
     <video id="video" autoplay playsinline preload="auto" crossorigin="anonymous"></video>
     <audio id="audio" preload="auto"></audio>
@@ -38,7 +38,7 @@
     <div id="badge"><img src="" alt=""></div>
     <div id="nowPlaying">iWatchTV</div>
 
-    <!-- Controls -->
+   
     <div id="controls" aria-hidden="true">
       <div class="controls-left">
         <button id="btnMenu" class="icon" title="Channels">☰</button>
@@ -58,7 +58,7 @@
       </div>
     </div>
 
-    <!-- Channel List -->
+   
     <aside id="chlist" aria-label="Channel list">
       <h2>Channels</h2>
       <div id="tabs">
@@ -72,16 +72,16 @@
     <div id="cue" style="display:none"></div>
   </div>
 
-  <!-- Watermark -->
+ 
   <div id="watermark">iWatchTVrAdio</div>
 
-  <!-- Anti DevTools -->
+
   <script src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
   <script>
     DisableDevtool({})
   </script>
 
-  <!-- Hidden Loader for app.js -->
+
   <script>
   (function(){
     // base64("app.js") = "YXBwLmpz"
@@ -97,3 +97,4 @@
   </script>
 </body>
 </html>
+
