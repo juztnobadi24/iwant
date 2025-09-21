@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>iWatchTVrAdio - V8</title>
+  <title>iWatchTVrAdio - V</title>
+
+  <!-- External libs -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.8/dist/hls.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.min.js"></script>
 
   <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
@@ -12,7 +16,7 @@
   <!-- Intro -->
   <div id="introScreen">
     <div id="introText">
-      □ Advertise and promote your business with us today! Call iWatchTV or Email us at iwatchtvworldwide@gmail.com.
+      □ Advertise and promote your business with us today! Call iWatchTV or Email us at iwatchtvworldwide@gmail.com. 
       We are here to serve you and elevate your business worldwide.<br>
       <small style="opacity:.9">Auto starting in 5 seconds... COPYRIGHT © 2025 iWatchTVraDio</small>
     </div>
@@ -71,142 +75,25 @@
   <!-- Watermark -->
   <div id="watermark">iWatchTVrAdio</div>
 
-  <!-- Anti DevTools (kept in HTML as requested) -->
-  <script src="https://cdn.jsdelivr.net/npm/disable-devtool"></script>
+  <!-- Anti DevTools -->
+  <script src='https://cdn.jsdelivr.net/npm/disable-devtool'></script>
   <script>
-    try { if (typeof DisableDevtool === 'function') DisableDevtool({}); } catch(e){}
+    DisableDevtool({})
   </script>
 
-  <!-- Loader: loads HLS, Shaka, then your app (app filename is Base64-encoded) -->
+  <!-- Hidden Loader for app.js -->
   <script>
-  (function () {
-    'use strict';
+  (function(){
+    // base64("app.js") = "YXBwLmpz"
+    const b64 = "YXBwLmpz";
+    const filename = atob(b64);
 
-    // ─────────── CONFIG ───────────
-    // Base64 of your app filename. Current value = base64("app.js") => "YXBwLmpz"
-    // If your file is named differently, replace with base64 of that filename.
-    const APP_B64 = 'YXBwLmpz';
-
-    // CDN URLs for libraries (these are required by app.js).
-    // If you already bundle these into app.js, you can remove them.
-    const libs = [
-      'https://cdn.jsdelivr.net/npm/hls.js@1.5.8/dist/hls.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.min.js'
-    ];
-
-    // Optional cache token (helps during development)
-    const cacheToken = '?v=' + (Math.floor(Date.now() / 1000) % 100000);
-
-    // ─────────── helpers ───────────
-    function decodeB64ToStr(b64) {
-      try {
-        const binary = atob(b64);
-        // handle UTF-8
-        const bytes = new Uint8Array(binary.length);
-        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-        const decoder = typeof TextDecoder !== 'undefined' ? new TextDecoder() : null;
-        return decoder ? decoder.decode(bytes) : String.fromCharCode.apply(null, bytes);
-      } catch (err) {
-        try { return atob(b64); } catch (e) { return ''; }
-      }
-    }
-
-    function loadScript(url, opts) {
-      opts = opts || {};
-      return new Promise((resolve, reject) => {
-        try {
-          const s = document.createElement('script');
-          s.type = 'text/javascript';
-          s.async = false;
-          if (opts.crossorigin) s.setAttribute('crossorigin', opts.crossorigin);
-          // small marker
-          s.setAttribute('data-dyn', '1');
-          s.onload = () => { resolve(url); };
-          s.onerror = (err) => { reject(new Error('Failed to load: ' + url)); };
-          s.src = url;
-          // append to head
-          (document.head || document.documentElement).appendChild(s);
-        } catch (e) {
-          reject(e);
-        }
-      });
-    }
-
-    function fetchAndInject(url) {
-      return fetch(url, { cache: 'no-store' })
-        .then(r => {
-          if (!r.ok) throw new Error('Fetch failed: ' + url);
-          return r.text();
-        })
-        .then(code => {
-          const blob = new Blob([code], { type: 'text/javascript' });
-          const blobUrl = URL.createObjectURL(blob);
-          return loadScript(blobUrl).then(() => URL.revokeObjectURL(blobUrl));
-        });
-    }
-
-    // ─────────── process ───────────
-    const appFilename = decodeB64ToStr(APP_B64) || 'app.js';
-    const appUrl = appFilename + cacheToken;
-
-    // Load libs sequentially (so order is deterministic)
-    (async function loadAll() {
-      try {
-        for (let i = 0; i < libs.length; i++) {
-          const url = libs[i] + cacheToken;
-          await loadScript(url, { crossorigin: 'anonymous' });
-        }
-
-        // Now load the app script. Try normal injection first.
-        try {
-          await loadScript(appUrl, { crossorigin: 'anonymous' });
-        } catch (err) {
-          // fallback: fetch and inject as blob
-          try {
-            await fetchAndInject(appUrl);
-          } catch (err2) {
-            // final fallback: show user-friendly error and log
-            console.error('Failed to load app script:', err, err2);
-            showLoadError();
-          }
-        }
-      } catch (outerErr) {
-        console.error('Loader error:', outerErr);
-        showLoadError();
-      }
-    })();
-
-    function showLoadError() {
-      // Visible notice so user knows something's wrong (useful while testing)
-      const el = document.createElement('div');
-      el.style.position = 'fixed';
-      el.style.left = '12px';
-      el.style.bottom = '12px';
-      el.style.zIndex = '99999';
-      el.style.background = 'rgba(0,0,0,0.85)';
-      el.style.color = '#fff';
-      el.style.padding = '10px 14px';
-      el.style.borderRadius = '8px';
-      el.style.fontSize = '13px';
-      el.textContent = 'Player failed to start — check console and ensure app.js is present.';
-      document.body.appendChild(el);
-    }
-
-    // Safety timeout: if _appLoaded flag isn't set by your app within 8s, show error
-    setTimeout(function () {
-      if (typeof window._appLoaded === 'undefined') {
-        // don't override a legitimate UI; only show if still not loaded
-        showLoadError();
-      }
-    }, 8000);
-
+    const s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.src = filename + "?v=" + Date.now(); // cache-busting
+    s.async = false;
+    document.head.appendChild(s);
   })();
   </script>
-
-  <noscript>
-    <div style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000;color:#fff;padding:20px;">
-      JavaScript is required to run this player. Please enable JavaScript in your browser.
-    </div>
-  </noscript>
 </body>
 </html>
